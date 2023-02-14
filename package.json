@@ -1,0 +1,15 @@
+{
+  "name": "pokeapi-handler",
+  "version": "1.0.0",
+  "description": "\"small client to request data from pokeapi\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "test_main"
+  },
+  "type": "module",
+  "author": "@fixmybugs",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^3.3.0"
+  }
+}
