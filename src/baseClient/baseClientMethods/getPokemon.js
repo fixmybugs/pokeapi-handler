@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import endpoints from '../baseClientHelpers/baseClientEndpoints.js';
+import dataSummary from '../baseClientHelpers/baseClientDataSummarizer.js';
 
 export default async function getPokemon({name}){
 
@@ -12,7 +13,8 @@ export default async function getPokemon({name}){
     let data =  await apiResponse.json();
 
     //use baseClientDataSummarizer here 
+    const pokemonSummary = dataSummary(data);
 
-    return data;
+    return pokemonSummary;
 
 }

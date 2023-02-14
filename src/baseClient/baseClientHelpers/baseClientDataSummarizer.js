@@ -1,9 +1,17 @@
 
 export default function summarize(data){
 
-    //This does nothing, modify here
+    //Modified to return an object from the data parameter with the properties: abilities, base_experience, height, weight, name and id
+    const summary = {
+      abilities: data.abilities,
+      base_experience: data.base_experience,
+      height: data.height,
+      weight: data.weight,
+      name: data.name,
+      id: data.id
+    }
 
-    return;
+    return Object.freeze(summary);
 
 }
 
