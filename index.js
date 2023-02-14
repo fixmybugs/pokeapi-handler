@@ -3,7 +3,7 @@ import client from './src/baseClient/baseClient.js';
 async function main(){
 
     //baseClient usage example:
-
+    let pokeClient = new client();
     let pokemonsToFetch = ["pikachu", "charmander", "squirtle"];
     pokeClient.getPokemonDataInXSeconds({nameList: pokemonsToFetch, timeInSeconds: 10});
 
