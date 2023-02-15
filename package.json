@@ -10,6 +10,7 @@
   "author": "@fixmybugs",
   "license": "ISC",
   "dependencies": {
-    "node-fetch": "^3.3.0"
+    "node-fetch": "^3.3.0",
+    "uuid": "^9.0.0"
   }
 }

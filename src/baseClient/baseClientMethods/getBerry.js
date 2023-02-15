@@ -2,14 +2,14 @@ import fetch from 'node-fetch';
 import endpoints from '../baseClientHelpers/baseClientEndpoints.js';
 import dataSummary from '../baseClientHelpers/baseClientDataSummarizer.js';
 
-export default async function getPokemon({name}){
+export default async function getBerry({name, fullData}){
 
     let endpoint
     if (typeof name === 'string'){
-        endpoint = endpoints.pokemonByName(name);
+        endpoint = endpoints.berryByName(name);
     }
     else if (typeof name === 'number'){
-        endpoint = endpoints.pokemonById(name);
+        endpoint = endpoints.berryById(name);
     }
 
     let requestParams = {
@@ -18,9 +18,8 @@ export default async function getPokemon({name}){
     let apiResponse = await fetch(endpoint, requestParams);
     let data =  await apiResponse.json();
 
-    //use baseClientDataSummarizer here 
-    const pokemonSummary = dataSummary(data, 'pokemon',true);
+    const berrySummary = dataSummary(data, 'berry', fullData);
 
-    return pokemonSummary;
+    return berrySummary;
 
 }

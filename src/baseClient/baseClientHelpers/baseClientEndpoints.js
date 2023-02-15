@@ -1,5 +1,8 @@
 let prefix = 'https://pokeapi.co/api/v2';
 
 export default  {
-    pokemon: (name)=>`${prefix}/pokemon/${name}/`
+    pokemonByName: (name)=>`${prefix}/pokemon/${name}/`,
+    pokemonById: (id)=>`${prefix}/pokemon/${id}/`,
+    berryByName: (name)=>`${prefix}/berry/${name}/`,
+    berryById: (id)=>`${prefix}/berry/${id}/`
 };
