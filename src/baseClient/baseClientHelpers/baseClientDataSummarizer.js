@@ -1,14 +1,36 @@
+import { v4 as uuidv4 } from 'uuid';
 
-export default function summarize(data){
+export default function summarize(data, type, fullData = false){
 
-    //Modified to return an object from the data parameter with the properties: abilities, base_experience, height, weight, name and id
-    const summary = {
-      abilities: data.abilities,
-      base_experience: data.base_experience,
-      height: data.height,
-      weight: data.weight,
-      name: data.name,
-      id: data.id
+    let summary = {}
+    let uuid = uuidv4();
+    if(!fullData){
+      return Object.freeze({...data, uuid});
+    } else {
+      if(type === "pokemon"){
+          summary = {
+              abilities: data.abilities,
+              base_experience: data.base_experience,
+              height: data.height,
+              weight: data.weight,
+              name: data.name,
+              id: data.id,
+              uuid: uuid
+          }
+      }else if(type === "berry"){
+          summary = {
+              name: data.name,
+              id: data.id,
+              growth_time: data.growth_time,
+              max_harvest: data.max_harvest,
+              natural_gift_power: data.natural_gift_power,
+              size: data.size,
+              smoothness: data.smoothness,
+              uuid: uuid
+          }
+        } else {
+          throw new Error("type must be either 'pokemon' or 'berry'");
+        }
     }
 
     return Object.freeze(summary);
