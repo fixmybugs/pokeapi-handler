@@ -4,7 +4,8 @@ import dataSummary from '../baseClientHelpers/baseClientDataSummarizer.js';
 
 export default async function getBerry({name, fullData}){
 
-    let endpoint
+    let endpoint;
+
     if (typeof name === 'string'){
         endpoint = endpoints.berryByName(name);
     }
@@ -15,10 +16,11 @@ export default async function getBerry({name, fullData}){
     let requestParams = {
         method: 'get'
     }
+    
     let apiResponse = await fetch(endpoint, requestParams);
     let data =  await apiResponse.json();
 
-    const berrySummary = dataSummary(data, 'berry', fullData);
+    const berrySummary = dataSummary({data: data, type:'berry', fullData: fullData});
 
     return berrySummary;
 

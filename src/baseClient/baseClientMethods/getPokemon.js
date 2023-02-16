@@ -2,9 +2,9 @@ import fetch from 'node-fetch';
 import endpoints from '../baseClientHelpers/baseClientEndpoints.js';
 import dataSummary from '../baseClientHelpers/baseClientDataSummarizer.js';
 
-export default async function getPokemon({name}){
+export default async function getPokemon({name, fullData}){
 
-    let endpoint
+    let endpoint;
     if (typeof name === 'string'){
         endpoint = endpoints.pokemonByName(name);
     }
@@ -18,8 +18,7 @@ export default async function getPokemon({name}){
     let apiResponse = await fetch(endpoint, requestParams);
     let data =  await apiResponse.json();
 
-    //use baseClientDataSummarizer here 
-    const pokemonSummary = dataSummary(data, 'pokemon',true);
+    const pokemonSummary = dataSummary({data: data, type: 'pokemon', fullData: fullData});
 
     return pokemonSummary;
 
