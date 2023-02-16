@@ -1,6 +1,7 @@
 import eventEmitter from 'events';
 import getPokemon from './baseClientMethods/getPokemon.js';
 import getBerry from './baseClientMethods/getBerry.js';
+import { getDatainXseconds } from './baseClientMethods/getData.js';
 
 
 export default class baseClient extends eventEmitter {
@@ -25,36 +26,30 @@ export default class baseClient extends eventEmitter {
         //nameList form example: ["pikachu", "charmander", "squirtle"] @array
         //timeInSeconds  form example: 8  @number
 
-        if (timeInSeconds < 3) throw new Error("{timeInSeconds} must not be less than 3");
-
-        this.pokemonFetcherId = setInterval(async () => {
-
-            for (let index = 0; index < nameList.length; index++) {
-
-                let pokeInfo = await this.getPokemon({ name: nameList[index] })
-                this.emit("pokemon_fetched", pokeInfo);
-            }
-
-        }, timeInSeconds * 1000);
+        getDatainXseconds({
+            nameList: nameList,
+            timeInSeconds: timeInSeconds,
+            fetcherId: this.pokemonFetcherId,
+            eventName: "pokemon_fetched",
+            fetchMethod: this.getPokemon,
+            emitter: this
+        });
 
     }
 
-    getBerryDataInXSeconds({ nameList, full, timeInSeconds }) {
+    getBerryDataInXSeconds({ nameList, timeInSeconds }) {
 
         //nameList form example: ["oran", "sitrus", "lum"] @array
         //timeInSeconds  form example: 8  @number
 
-        if (timeInSeconds < 3) throw new Error("{timeInSeconds} must not be less than 3");
-
-        this.berryFetcherId = setInterval(async () => {
-
-            for (let index = 0; index < nameList.length; index++) {
-
-                let berryInfo = await this.getBerry({ name: nameList[index], fullData: full })
-                this.emit("berry_fetched", berryInfo);
-            }
-
-        }, timeInSeconds * 1000);
+        getDatainXseconds({
+            nameList: nameList,
+            timeInSeconds: timeInSeconds,
+            fetcherId: this.berryFetcherId,
+            eventName: "berry_fetched",
+            fetchMethod: this.getBerry,
+            emitter: this
+        });
 
     }
 
