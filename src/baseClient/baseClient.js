@@ -1,14 +1,15 @@
 import eventEmitter from 'events';
 import getPokemon from './baseClientMethods/getPokemon.js';
 import getBerry from './baseClientMethods/getBerry.js';
-
+import getDataInXSeconds from './baseClientMethods/getDataInXSeconds.js';
+import stopFetchData from './baseClientMethods/stopFetchData.js';
 
 export default class baseClient extends eventEmitter {
 
     constructor() {
         super()
         this.pokemonFetcherId;
-        this.berryFetcherId;
+        this.fetchersIds = [];
     }
 
     async getPokemon({ name, fullData }) {
@@ -19,48 +20,24 @@ export default class baseClient extends eventEmitter {
         return await getBerry({ name: name, fullData: fullData });
     }
 
+    getDataInXSeconds({ nameList, timeInSeconds, type, fullData }) {
 
-    getPokemonDataInXSeconds({ nameList, timeInSeconds }) {
+        let parameters = {
+            context: this, //this contains the entire context of baseClient
+            nameList: nameList,
+            timeInSeconds: timeInSeconds,
+            type: type,
+            fullData: fullData
+        };
 
-        //nameList form example: ["pikachu", "charmander", "squirtle"] @array
-        //timeInSeconds  form example: 8  @number
-
-        if (timeInSeconds < 3) throw new Error("{timeInSeconds} must not be less than 3");
-
-        this.pokemonFetcherId = setInterval(async () => {
-
-            for (let index = 0; index < nameList.length; index++) {
-
-                let pokeInfo = await this.getPokemon({ name: nameList[index] })
-                this.emit("pokemon_fetched", pokeInfo);
-            }
-
-        }, timeInSeconds * 1000);
-
-    }
-
-    getBerryDataInXSeconds({ nameList, full, timeInSeconds }) {
-
-        //nameList form example: ["oran", "sitrus", "lum"] @array
-        //timeInSeconds  form example: 8  @number
-
-        if (timeInSeconds < 3) throw new Error("{timeInSeconds} must not be less than 3");
-
-        this.berryFetcherId = setInterval(async () => {
-
-            for (let index = 0; index < nameList.length; index++) {
-
-                let berryInfo = await this.getBerry({ name: nameList[index], fullData: full })
-                this.emit("berry_fetched", berryInfo);
-            }
-
-        }, timeInSeconds * 1000);
+        let fetcherId = getDataInXSeconds(parameters);
+        this.fetchersIds.push(fetcherId);
 
     }
 
     stopFetchData() {
-        clearInterval(this.pokemonFetcherId);
-        clearInterval(this.berryFetcherId);
+        stopFetchData(this.fetchersIds);
+        this.fetchersIds = [];
     }
 
 
